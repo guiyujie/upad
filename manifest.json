@@ -10,10 +10,12 @@
   "permissions": [
     "idle",
     "storage",
+    "webview",
     "fullscreen", 
     "alwaysOnTopWindows",
     "system.display",
     "overrideEscFullscreen",
+    "https://upad.gitee.io/",
     "https://gyj.urer.top/",
     "https://p.gu321.com/"
   ]

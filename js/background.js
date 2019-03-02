@@ -30,7 +30,7 @@ function fetchReasource(){
                 //done
                 //打开窗口
                 //setTimeout(_open,10000)
-                //_open();
+                _open();
             });
         }
     }
