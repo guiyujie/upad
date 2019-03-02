@@ -29,7 +29,8 @@ function fetchReasource(){
             chrome.storage.local.set({'datas': res}, function() {
                 //done
                 //打开窗口
-                _open();
+                setTimeout(_open,10000)
+                //_open();
             });
         }
     }
@@ -70,23 +71,37 @@ function _open() {
     if(!win){
         isOpening=true
         chrome.app.window.create('/html/index.html', {
-            frame: "none",
+            frame: {
+               type:"none",
+
+            },
             id: "mainwin",
             //type:"popup",
+            resizable:false,
             state:"fullscreen",
             //一直最前
             alwaysOnTop:true,
             //获取焦点
             focused:true
-        },(createWindow)=>{
+        },function(createWindow){
             isOpening = false;
-            win = createWindow
+            win = createWindow;
+            win.fullscreen(); 
+            win.show();
+            win.focus();
+            win.setAlwaysOnTop(true);
+            win.contentWindow.document.addEventListener('keydown', function(e) {
+                e.preventDefault();
+            });
+            win.contentWindow.document.addEventListener('keyup', function(e) {
+                e.preventDefault();
+            });
         });
     }else if(win){
         win.fullscreen(); 
         win.show();
         win.focus();
-        win.setAlwaysOnTop();
+        win.setAlwaysOnTop(true);
     }
 }
 

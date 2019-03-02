@@ -118,6 +118,8 @@ function launch(){
     chrome.storage.local.get("datas", function(res) {
         init(res.datas);
     });
+
 }
 
 window.addEventListener('load', launch);
+
