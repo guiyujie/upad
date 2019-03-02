@@ -29,7 +29,7 @@ function fetchReasource(){
             chrome.storage.local.set({'datas': res}, function() {
                 //done
                 //打开窗口
-                setTimeout(_open,10000)
+                //setTimeout(_open,10000)
                 //_open();
             });
         }
