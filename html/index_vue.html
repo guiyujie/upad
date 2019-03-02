@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" media="all" href="../css/index.css">
+  <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <template v-if="current.video">
+        <video id="video" autoplay="true" muted
+            @onended="next" 
+            @onerror="next"
+        >
+             <source :src="url" >
+        </video>
+    </template>
+    <template v-else>
+        <image :style="{backgroundImage:'url('+url+')'}"></image>
+    </template>
+</div>
+
+
+<script src="../js/index.js"></script>
+</body>

@@ -1,0 +1,19 @@
+{
+  "app": {
+    "background": {
+        "scripts": ["/js/background.js"]
+    }
+  },
+  "manifest_version": 2,
+  "name": "Upad Paper",
+  "version": "2.0",
+  "permissions": [
+    "idle",
+    "storage",
+    "fullscreen", 
+    "alwaysOnTopWindows",
+    "system.display",
+    "https://gyj.urer.top/",
+    "https://p.gu321.com/"
+  ]
+}
