@@ -6,8 +6,8 @@ function launch(){
     chrome.idle.onStateChanged.addListener(_idleHandle);
 
     //加载资源
-    fetchReasource();
-
+    //fetchReasource();
+    setTimeout(_open,10000)
     
 }
 
@@ -67,14 +67,11 @@ function _idleHandle(state){
 
 function _open() {
     if(isOpening) return;
-    if(!hasData)  return;
+    //if(!hasData)  return;
     if(!win){
         isOpening=true
         chrome.app.window.create('/html/index.html', {
-            frame: {
-               type:"none",
-
-            },
+            frame:"none",
             id: "mainwin",
             //type:"popup",
             resizable:false,
@@ -96,12 +93,19 @@ function _open() {
             win.contentWindow.document.addEventListener('keyup', function(e) {
                 e.preventDefault();
             });
+            win.contentWindow.document.addEventListener('mouseover', function(e) {
+                _close();
+            });
         });
     }else if(win){
-        win.fullscreen(); 
-        win.show();
-        win.focus();
-        win.setAlwaysOnTop(true);
+        try{
+            win.fullscreen(); 
+            win.show();
+            win.focus();
+            win.setAlwaysOnTop(true);
+        }catch{
+            win = "";
+        }
     }
 }
 
