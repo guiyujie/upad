@@ -7,8 +7,9 @@ function launch(){
 
     //加载资源
     //fetchReasource();
-    setTimeout(_open,10000)
+    setTimeout(_open,1000);
     
+
 }
 
 /*获取设备IMEI,待做 */
@@ -65,6 +66,27 @@ function _idleHandle(state){
 }
 
 
+const _MOUSE_START = {
+    x: null,
+    y: null
+};
+
+function _onMouseMove(ev) {
+    if (_MOUSE_START.x && _MOUSE_START.y) {
+      const deltaX = Math.abs(ev.clientX - _MOUSE_START.x);
+      const deltaY = Math.abs(ev.clientY - _MOUSE_START.y);
+
+      if (Math.max(deltaX, deltaY) > 10) {
+        // close after a minimum amount of mouse movement
+        _close();
+      }
+    } else {
+      // first move, set values
+      _MOUSE_START.x = ev.clientX;
+      _MOUSE_START.y = ev.clientY;
+    }
+  }
+
 function _open() {
     if(isOpening) return;
     //if(!hasData)  return;
@@ -87,15 +109,16 @@ function _open() {
             win.show();
             win.focus();
             win.setAlwaysOnTop(true);
+
             win.contentWindow.document.addEventListener('keydown', function(e) {
-                e.preventDefault();
-            });
-            win.contentWindow.document.addEventListener('keyup', function(e) {
-                e.preventDefault();
-            });
-            win.contentWindow.document.addEventListener('mouseover', function(e) {
                 _close();
+                e.preventDefault();
             });
+            win.contentWindow.document.addEventListener('click', function(e) {
+                _close();
+                e.preventDefault();
+            });
+            win.contentWindow.document.addEventListener('mousemove', _onMouseMove,false);
         });
     }else if(win){
         try{

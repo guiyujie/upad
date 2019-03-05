@@ -5,14 +5,20 @@ html,body{
     height: 100%;
     overflow: hidden;
     border:none;
+    cursor: none;
     -webkit-app-region: no-drag;
 }
 body{
     background: #000;
     cursor: none;
 }
-#app{
+#mask{
+    position: fixed;
+    z-index: 100;
+    cursor: none;
+    width: 100%;
     height: 100%;
+    background: transparent;
 }
 video,.img{
     width: 100%;
