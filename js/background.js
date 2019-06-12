@@ -36,7 +36,6 @@ function fetchReasource(){
         }
     }
     let header = {
-        "I":"O9OpO0YA2kBrY2LGsX7vDxyu",
         "Content-Type":"application/json"
     }
     for(let i in header){
@@ -87,53 +86,71 @@ function _onMouseMove(ev) {
     }
   }
 
+//使用标签打开
+const winOpts = {
+    url: '/html/index.html',
+    focused: true,
+    state: 'fullscreen',
+    type: 'popup'
+  };
+
+
 function _open() {
     if(isOpening) return;
     //if(!hasData)  return;
-    if(!win){
-        isOpening=true
-        chrome.app.window.create('/html/index.html', {
-            frame:"none",
-            id: "mainwin",
-            //type:"popup",
-            resizable:false,
-            state:"fullscreen",
-            //一直最前
-            alwaysOnTop:true,
-            //获取焦点
-            focused:true
-        },function(createWindow){
-            isOpening = false;
-            win = createWindow;
-            win.fullscreen(); 
-            win.show();
-            win.focus();
-            win.setAlwaysOnTop(true);
-
-            win.contentWindow.document.addEventListener('keydown', function(e) {
-                _close();
-                e.preventDefault();
-            });
-            win.contentWindow.document.addEventListener('click', function(e) {
-                _close();
-                e.preventDefault();
-            });
-            win.contentWindow.document.addEventListener('mousemove', _onMouseMove,false);
-        });
-    }else if(win){
-        try{
-            win.fullscreen(); 
-            win.show();
-            win.focus();
-            win.setAlwaysOnTop(true);
-        }catch{
-            win = "";
+    isOpening=true
+    chrome.app.window.create('/html/index.html', {
+        frame:"none",
+        id: "mainwin",
+        //type:"popup",
+        resizable:false,
+        state:"fullscreen",
+        singleton:true,
+        hidden:true,
+        //一直最前
+        alwaysOnTop:true,
+        //获取焦点
+        focused:true,
+        innerBounds:{
+            left:0,
+            top:0,
+            width:1,
+            height:1
         }
-    }
+    },function(createWindow){
+        isOpening = false;
+        win = createWindow;
+        
+       
+        win.fullscreen(); 
+        win.setAlwaysOnTop(true);
+        win.show(true);
+        win.focus();
+        //避免离开全屏
+        win.contentWindow.addEventListener('keydown', function(e) {
+            if (e.keyCode == 27 ) { 
+                e.preventDefault(); 
+                e.stopPropagation(); 
+            }
+        });
+
+        win.contentWindow.document.addEventListener('keydown', function(e) {
+            _close();
+            e.preventDefault();
+        });
+        win.contentWindow.document.addEventListener('click', function(e) {
+            _close();
+            e.preventDefault();
+        });
+        win.contentWindow.document.addEventListener('mousemove', _onMouseMove,false);
+    
+    });
 }
 
 function _close(){
     if(win){
+        win.hide();
+        win.restore();        
         win.close();
         win = "";
     }

@@ -1,7 +1,8 @@
 {
   "app": {
     "background": {
-        "scripts": ["/js/background.js"]
+      "persistent": false,
+      "page": "html/background.html"
     }
   },
   "manifest_version": 2,
@@ -11,12 +12,12 @@
     "idle",
     "storage",
     "webview",
-    "fullscreen", 
+    "fullscreen",
     "alwaysOnTopWindows",
     "system.display",
     "overrideEscFullscreen",
-    "https://upad.gitee.io/",
     "https://gyj.urer.top/",
-    "https://p.gu321.com/"
+    "https://p.gu321.com/",
+    "https://gyj.html.ucommuner.com/"
   ]
 }
